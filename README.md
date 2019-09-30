@@ -7,12 +7,12 @@ Specify the number of threads to run to see performance for any number of thread
 Commands
 ```
 Use '-h' or 'help' for help menu
-Use '-s' to run a single test
-Use '-i' to run a test for each number of threads until given number
-Use '-f' followed by file name to save result to given file. Must follow '-i' or '-s'
+Use '-s' or 'single' to run a single test for give amount of threads
+Use '-i' or 'increment' to run a test for each number of threads until given amount of threads
+Use '-f' or 'file' to save output in given file.
 ```
 
-### TOOD
-- put commands in any order followed by parameters
-- handling any incorrect input
-- default option
+### TODO
+- Add option to specifically use console output
+- Add option to do a test with the same number of cores several times
+- Add option to choose between overwriting or appending to results file
