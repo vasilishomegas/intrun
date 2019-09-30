@@ -13,7 +13,6 @@ namespace IntThreat
             string file = "";
             int threads = 0;
             int runs = 1;
-            //bool repeat = false;
             TestMode testmode = TestMode.None;
             ResultMode resultmode = ResultMode.None;
 
@@ -21,13 +20,12 @@ namespace IntThreat
             if (args.Length == 0) // default option
             {
                 threads = 4;
-                //runs = 1; // redundant
                 testmode = TestMode.Single;
                 resultmode = ResultMode.Console;
             }
             for (int i = 0; i < args.Length; ++i) // go through all parameters
             {
-                // TODO: add option for console output (explicitly), add option for repeating same test, and appending or overwriting file
+                // TODO: add option for appending or overwriting file
                 if (args[i] == "-h" || args[i] == "help") // help menu
                 {
                     if (i != 0) // help should be first parameter, possibly followed by the parameter you need help with
@@ -147,9 +145,7 @@ namespace IntThreat
                     ++i;
                 }
                 else if (args[i] == "-e" || args[i] == "echo")
-                {
                     resultmode = ResultMode.Console;
-                }
                 else if (args[i] == "-r" || args[i] == "repeat")
                 {
                     if (args.Length == i + 1)
@@ -165,7 +161,6 @@ namespace IntThreat
                             Console.WriteLine(runs + " is not a valid number of runs");
                             return;
                         }
-                        //repeat = true;
                         ++i;
                     }
                     catch
@@ -176,9 +171,7 @@ namespace IntThreat
                     
                 }
                 else // invalid command
-                {
-                    // maybe just ignore?
-                }
+                    Console.WriteLine("Unrecognised command '" + args[i] + "' ignored.");
             }
 
             if (testmode == TestMode.None)
@@ -187,9 +180,7 @@ namespace IntThreat
                 return;
             }
             if (resultmode == ResultMode.None) // does not need to be specified
-            {
                 resultmode = ResultMode.Console;
-            }
 
 
             // carrying out tests
@@ -249,7 +240,7 @@ namespace IntThreat
                             Console.WriteLine(Intrun(i));
                         }
                     }
-                    else if (runs > 1) // log incremented repeated test to console !!!
+                    else if (runs > 1) // log incremented repeated test to console
                     {
                         Console.WriteLine("Results per threads:");
                         for (int i = 1; i <= runs; ++i)
@@ -274,17 +265,13 @@ namespace IntThreat
                             System.IO.File.AppendAllText(file, i + ". " + Intrun(i) + "\n");
                         Console.WriteLine("Results exported to " + file);
                     }
-                    else if (runs > 1) // log incremented repeated test to file !!!
+                    else if (runs > 1) // log incremented repeated test to file
                     {
                         Console.WriteLine("Testing up to " + threads + " threads " + runs + " times");
                         System.IO.File.WriteAllText(file, "");
                         for (int i = 1; i <= runs; ++i)
-                        {
                             for (int j = 1; j <= threads; ++j)
-                            {
                                 System.IO.File.AppendAllText(file, i + "." + j + ". " + Intrun(i) + "\n");
-                            }
-                        }
                         Console.WriteLine("Results exported to " + file);
                     }
 
